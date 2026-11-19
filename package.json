@@ -1,0 +1,26 @@
+{
+  "name": "medibook",
+  "version": "1.0.0",
+  "description": "MediBook Clinic Appointment System — Summative backend",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "worker": "node worker/waitlistWorker.js",
+    "test": "jest --runInBand",
+    "db:init": "mysql -u root -p < database/schema.sql && mysql -u root -p medibook < database/seed.sql"
+  },
+  "dependencies": {
+    "bullmq": "^5.12.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "ioredis": "^5.4.1",
+    "mysql2": "^3.11.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "roots": ["<rootDir>/tests"]
+  }
+}
