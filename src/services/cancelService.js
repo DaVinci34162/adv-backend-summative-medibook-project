@@ -1,6 +1,13 @@
+const { logEvent } = require('./auditService');
 const pool = require('../config/db');
 const { computeRefund } = require('./refundService');
 const { httpError } = require('./validationService');
+const { Queue } = require('bullmq');
+const redisConfig = { 
+  host: process.env.REDIS_HOST || '127.0.0.1', 
+  port: Number(process.env.REDIS_PORT) || 6379 
+};
+const waitlistQueue = new Queue('WaitlistPromotion', { connection: redisConfig });
 
 async function cancelAppointment(appointment_id) {
   const conn = await pool.getConnection();
@@ -30,6 +37,14 @@ async function cancelAppointment(appointment_id) {
     );
 
     await conn.commit();
+    await waitlistQueue.add('promote', {
+      doctor_id: appt.doctor_id,
+      slot_datetime: appt.slot_datetime
+    })
+    await logEvent('APPOINTMENT_CANCELLED', {
+      appointment_id,
+      refund_amount: amount
+    });
     return { appointment_id, refund_amount: amount };
 
   } catch (err) {

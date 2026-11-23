@@ -1,3 +1,4 @@
+const { logEvent } = require('./auditService');
 const pool = require('../config/db');
 const { validateSlot, httpError } = require('./validationService');
 const {
@@ -51,6 +52,13 @@ async function bookAppointment({ patient_id, doctor_id, slot_datetime }) {
     );
 
     await conn.commit();
+    await logEvent('APPOINTMENT_BOOKED', {
+      appointment_id: result.insertId,
+      patient_id,
+      doctor_id,
+      slot_datetime: parsedSlot,
+      fee_charged: fee
+    });
     return {
       appointment_id: result.insertId,
       patient_id,

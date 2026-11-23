@@ -1,3 +1,4 @@
+const { addToWaitlist } = require('../services/waitlistService');
 const { bookAppointment } = require('../services/bookingService');
 const { cancelAppointment } = require('../services/cancelService');
 
@@ -8,8 +9,19 @@ async function book(req, res, next) {
       return res.status(400).json({ error: 'Missing required fields: patient_id, doctor_id, slot_datetime' });
     }
 
-    const result = await bookAppointment({ patient_id, doctor_id, slot_datetime });
-    res.status(201).json(result);
+    try {
+      const result = await bookAppointment({ patient_id, doctor_id, slot_datetime });
+      res.status(201).json(result);
+    } catch (err) {
+      if (err.status === 409) {
+        await addToWaitlist(doctor_id, slot_datetime, patient_id);
+        return res.status(409).json({ 
+          error: err.message, 
+          waitlist: 'You have been added to the waitlist for this slot.' 
+        });
+      }
+      throw err;
+    }
   } catch (err) { next(err); }
 }
 
