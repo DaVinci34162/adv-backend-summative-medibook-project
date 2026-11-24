@@ -71,23 +71,25 @@ When a slot is booked (409 Conflict), the patient is pushed to a Redis list spec
 A separate worker process (worker/waitlistWorker.js) listens via BullMQ for cancellations. When a cancellation occurs, it pops the first patient from the list and tries to book them. If the booking fails (e.g., another non-waitlisted user booked the slot 1 second prior), the worker catches the error and pushes the patient back to the front of the Redis queue (requeue), ensuring they are never lost from both the queue and the database.
 
 ## 3. API Endpoints
-Method	Endpoint	Description
-GET	/api/patients	List all patients
-POST	/api/patients	Create a patient
-GET	/api/patients/:id	Get patient by ID
-PUT	/api/patients/:id	Update patient
-DELETE	/api/patients/:id	Delete patient
-GET	/api/doctors	List all doctors
-POST	/api/doctors	Create a doctor
-GET	/api/doctors/:id	Get doctor by ID
-PUT	/api/doctors/:id	Update doctor
-DELETE	/api/doctors/:id	Delete doctor
-POST	/api/appointments	Book an appointment
-DELETE	/api/appointments/:id	Cancel an appointment
-GET	/api/reports/doctors	Doctors report (revenue/appts)
-GET	/api/reports/busy-days	Busy days report (>80% capacity)
-GET	/api/reports/doctor/:id/stats	Doctor statistics & utilization
-GET	/feedback?lang=[en/fr]	i18n Feedback Page
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| GET | `/api/patients` | List all patients |
+| POST | `/api/patients` | Create a patient |
+| GET | `/api/patients/:id` | Get patient by ID |
+| PUT | `/api/patients/:id` | Update patient |
+| DELETE | `/api/patients/:id` | Delete patient |
+| GET | `/api/doctors` | List all doctors |
+| POST | `/api/doctors` | Create a doctor |
+| GET | `/api/doctors/:id` | Get doctor by ID |
+| PUT | `/api/doctors/:id` | Update doctor |
+| DELETE | `/api/doctors/:id` | Delete doctor |
+| POST | `/api/appointments` | Book an appointment |
+| DELETE | `/api/appointments/:id` | Cancel an appointment |
+| GET | `/api/reports/doctors` | Doctors report (revenue/appts) |
+| GET | `/api/reports/busy-days` | Busy days report (>80% capacity) |
+| GET | `/api/reports/doctor/:id/stats` | Doctor statistics & utilization |
+| GET | `/feedback?lang=[en/fr]` | i18n Feedback Page |
 
 ## 4. Database Schema
 https://./schema-diagram.png
