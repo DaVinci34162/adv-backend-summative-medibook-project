@@ -1,7 +1,7 @@
 # MediBook Clinic Appointment System
 
-**Student:** [Your Name]
-**Repository:** [Your GitHub Link]
+**Student:** Murengezi Gisanura DaVinci
+**Repository:** https://github.com/DaVinci34162/adv-backend-summative-medibook-project
 
 ## 1. Setup Instructions
 
