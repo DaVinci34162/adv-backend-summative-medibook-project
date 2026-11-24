@@ -1,7 +1,6 @@
 # MediBook Clinic Appointment System
 
-**Student:** [Your Name]
-**Repository:** [Your GitHub Link]
+**Student:** Murengezi Gisanura DaVinci
 
 ## 1. Setup Instructions
 
