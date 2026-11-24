@@ -49,9 +49,9 @@ npm test
 # Part C: Concurrency & Double-Booking Prevention
 To ensure a doctor cannot have two appointments at the same time (even if two requests arrive simultaneously), I used two layers of defense:
 
-Database-level: The appointments table has a generated column active_slot_key (e.g., 1-202612010700). It generates a unique string only when the status is 'booked'. A UNIQUE constraint on this column prevents any double-booking at the database level. Cancelled appointments get a NULL key, allowing the slot to be rebooked while keeping the cancellation record.
+# Database-level: The appointments table has a generated column active_slot_key (e.g., 1-202612010700). It generates a unique string only when the status is 'booked'. A UNIQUE constraint on this column prevents any double-booking at the database level. Cancelled appointments get a NULL key, allowing the slot to be rebooked while keeping the cancellation record.
 
-Application-level: The bookAppointment service uses a transaction with SELECT ... FOR UPDATE to lock the doctor's daily rows. This prevents the "12 appointments per day" race condition.
+# Application-level: The bookAppointment service uses a transaction with SELECT ... FOR UPDATE to lock the doctor's daily rows. This prevents the "12 appointments per day" race condition.
 
 # Part C: Refund Policy Boundaries
 The refund calculator strictly enforces the documented policy:
