@@ -94,4 +94,4 @@ A separate worker process (worker/waitlistWorker.js) listens via BullMQ for canc
 | GET | `/feedback?lang=[en/fr]` | i18n Feedback Page |
 
 ## 4. Database Schema
-https://./schema-diagram.png
+![Schema Diagram](./schema-diagram.png)
