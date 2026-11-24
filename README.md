@@ -88,5 +88,5 @@ GET	/api/reports/doctors	Doctors report (revenue/appts)
 GET	/api/reports/busy-days	Busy days report (>80% capacity)
 GET	/api/reports/doctor/:id/stats	Doctor statistics & utilization
 GET	/feedback?lang=[en/fr]	i18n Feedback Page
-4. Database Schema
+##4. Database Schema
 https://./schema-diagram.png
