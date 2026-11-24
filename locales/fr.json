@@ -1,0 +1,12 @@
+{
+  "title": "Feedback du Cours MediBook",
+  "instructions": "Veuillez répondre aux 5 questions suivantes.",
+  "questions": [
+    "Quel sujet de ce cours avez-vous trouvé le plus difficile, et pourquoi ?",
+    "Décrivez un concept que vous n'avez compris qu'après les travaux pratiques. Qu'est-ce qui a fait tilt ?",
+    "Comment votre approche de la conception de bases de données ou d'API a-t-elle changé depuis le début du trimestre ?",
+    "Que amélioreriez-vous dans la façon dont ce cours a été enseigné ou évalué ?",
+    "Comment prévoyez-vous d'appliquer ce que vous avez appris dans ce cours à l'avenir ?"
+  ],
+  "date": "La date d'aujourd'hui est : {date}"
+}

@@ -19,6 +19,9 @@ app.use('/api/appointments', appointmentRoutes);
 // Health check
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
+const feedbackController = require('./controllers/feedbackController');
+app.get('/feedback', feedbackController.getFeedback);
+
 // Central Error Handler (must be the last app.use)
 app.use(errorHandler);
 
