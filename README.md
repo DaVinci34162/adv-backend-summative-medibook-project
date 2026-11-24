@@ -45,15 +45,15 @@ Run Tests:
 
 bash
 npm test
-2. Design Justifications
-Part C: Concurrency & Double-Booking Prevention
+## 2. Design Justifications
+# Part C: Concurrency & Double-Booking Prevention
 To ensure a doctor cannot have two appointments at the same time (even if two requests arrive simultaneously), I used two layers of defense:
 
 Database-level: The appointments table has a generated column active_slot_key (e.g., 1-202612010700). It generates a unique string only when the status is 'booked'. A UNIQUE constraint on this column prevents any double-booking at the database level. Cancelled appointments get a NULL key, allowing the slot to be rebooked while keeping the cancellation record.
 
 Application-level: The bookAppointment service uses a transaction with SELECT ... FOR UPDATE to lock the doctor's daily rows. This prevents the "12 appointments per day" race condition.
 
-Part C: Refund Policy Boundaries
+# Part C: Refund Policy Boundaries
 The refund calculator strictly enforces the documented policy:
 
 > 48 hours: 100%
@@ -63,14 +63,14 @@ The refund calculator strictly enforces the documented policy:
 < 24 hours: 0%
 The tests in tests/refund.test.js explicitly cover the exact boundaries (exactly 24h and exactly 48h).
 
-Part D: Audit Logging
+# Part D: Audit Logging
 I used fs.promises.appendFile to log successful bookings and cancellations asynchronously. The logger automatically creates the logs/ directory if it doesn't exist. If the logging fails (e.g., permissions error), the error is caught and swallowed so the user's request never fails because of a logging issue.
 
-Part E: Redis Waitlist & Worker Process
+# Part E: Redis Waitlist & Worker Process
 When a slot is booked (409 Conflict), the patient is pushed to a Redis list specific to that doctor and timeslot (waitlist:{doctor_id}:{isoSlot}).
 A separate worker process (worker/waitlistWorker.js) listens via BullMQ for cancellations. When a cancellation occurs, it pops the first patient from the list and tries to book them. If the booking fails (e.g., another non-waitlisted user booked the slot 1 second prior), the worker catches the error and pushes the patient back to the front of the Redis queue (requeue), ensuring they are never lost from both the queue and the database.
 
-3. API Endpoints
+## 3. API Endpoints
 Method	Endpoint	Description
 GET	/api/patients	List all patients
 POST	/api/patients	Create a patient
